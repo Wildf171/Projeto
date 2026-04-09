@@ -1,0 +1,55 @@
+RESULTADOS DO CLUSTERING DE NOTÍCIAS
+======================================================================
+
+CLUSTER 0
+Nome sugerido: Tema Geral
+--------------------------------------------------
+Palavras mais frequentes:
+baleia (10), baleias (10), rio (9), cinzentas (9), willapa (8), direitos (6), cascadia (6), research (6), collective (6), disse (6)
+
+Exemplos de textos:
+1. baleia cinzenta juvenil encontrada morta rio willapa suspeita fome notícias direitos autorais todos direitos reservados direitos autorais todos direitos reservados esta foto fornecida pelo cascadia research collective mostra baleia cinzenta nadando rio willapa perto willapa bay washington quarta feira abril cascadia research collective via esta foto fornecida pelo cascadia research collective mostra baleia cinzenta nadando rio willapa perto willapa bay washington quarta feira abril cascadia rese...
+
+======================================================================
+
+CLUSTER 1
+Nome sugerido: Justiça, Tribunal e Relações Internacionais
+--------------------------------------------------
+Palavras mais frequentes:
+direitos (18), disse (11), caminhão (10), autorais (9), todos (9), reservados (9), decisão (7), gasolina (7), tribunal (6), eua (6)
+
+Exemplos de textos:
+1. tribunal restabelece sentença milhões contra olp autoridade palestina notícias direitos autorais todos direitos reservados direitos autorais todos direitos reservados tribunal thurgood marshall estados unidos fica foley square outubro nova york mark lennihan arquivo nova iorque sentença milhões dólares contra autoridades palestinas restabelecida juízes apelação decisão suprema corte eua favor americanos mortos feridos ataques israel decisão tribunal apelações circuito eua surge década depois pro...
+
+2. caminhão tanque texas entra chamas colisão notícias direitos autorais todos direitos reservados direitos autorais todos direitos reservados caminhão tanque texas transportando gasolina explodiu incêndio manhã domingo depois colidir outro veículo derrubar linhas energia deixando motorista caminhão estado crítico fort worth texas caminhão tanque texas transportando gasolina explodiu incêndio domingo depois colidir outro veículo derrubar linhas energia deixando motorista caminhão estado crítico dis...
+
+3. autoridades investigam relatos tiros perto parque lafayette washington notícias direitos autorais todos direitos reservados direitos autorais todos direitos reservados guindastes usados construir novo salão baile casa branca são vistos redor casa branca sábado abril washington julia demaree nikhinson washington serviço secreto eua disse domingo estava investigando relatos tiroteios noturnos perto parque lafayette fica outro lado rua casa branca nenhum ferimento relatado nenhum suspeito encontrad...
+
+======================================================================
+
+CLUSTER 2
+Nome sugerido: Política, Governo e Eleições
+--------------------------------------------------
+Palavras mais frequentes:
+disse (33), platner (30), direitos (24), eua (24), cia (20), factbook (19), todos (18), trump (17), maine (17), dois (15)
+
+Exemplos de textos:
+1. saber resgate aviador americano irã notícias direitos autorais todos direitos reservados direitos autorais todos direitos reservados enquanto estados unidos afirmavam domingo resgataram militar desaparecido atrás linhas inimigas irão abateu caça televisão estatal iraniana transmitiu vídeo mostrando alegou serem partes aeronaves americanas faziam parte operação resgate militares país tinham abatido oficial inteligência regional informado missão disse militares eua explodiram dois aviões transport...
+
+2. adeus cia world factbook manual referência agora extinto sob trump notícias direitos autorais todos direitos reservados direitos autorais todos direitos reservados selo agência central inteligência sede cia langley virgínia abril carolyn kaster arquivo diretor cia john ratcliffe escuta durante audiência comitê permanente inteligência câmara examinar ameaças mundiais quinta feira março capitólio washington tom brenner você frequentou escola algum momento administração nixon então provavelmente vi...
+
+3. administração trump publica mensagens páscoa celebrando ressurreição cristo notícias direitos autorais todos direitos reservados direitos autorais todos direitos reservados esta captura tela tirada site mídia social mostra postagem páscoa feita pela conta oficial departamento segurança interna foto pessoas partem culto oração nascer sol domingo páscoa lincoln memorial domingo abril washington rod lamkey esta captura tela tirada site mídia social mostra postagem páscoa feita pela conta oficial de...
+
+======================================================================
+
+CLUSTER 3
+Nome sugerido: Guerra Rússia-Ucrânia e Energia
+--------------------------------------------------
+Palavras mais frequentes:
+hungria (14), ucrânia (12), petróleo (8), gás (7), russo (6), direitos (5), orbán (5), fornecimento (3), todos (3), reservados (3)
+
+Exemplos de textos:
+1. hungria cortará fornecimento gás natural ucrânia causa disputa petrolífera russa notícias direitos autorais todos direitos reservados direitos autorais todos direitos reservados primeiro ministro hungria viktor orban chega cimeira edifício conselho europeu bruxelas quinta feira março geert vanden wijngaert budapeste hungria hungria cortará gradualmente fornecimento gás ucrânia entregas petróleo russo sejam retomadas através oleoduto druzhba disse primeiro ministro viktor orbán quarta feira trâns...
+
+======================================================================
+

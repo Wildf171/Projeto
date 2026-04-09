@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clusters de Notícias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="topo">
+        <div class="topo-faixa"></div>
+        <div class="topo-conteudo">
+            <div>
+                <h1>Análise de Notícias com K-Means</h1>
+                <p>Mineração de texto, pré-processamento e clusterização temática</p>
+            </div>
+            <div class="badge-topo">Python + Flask + Chart.js</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2>Painel de clusters</h2>
+            <p>
+                Este painel apresenta os resultados da clusterização de notícias coletadas da web.
+                Os textos foram processados, filtrados e agrupados automaticamente por similaridade
+                usando TF-IDF e K-Means.
+            </p>
+        </section>
+
+        <section class="cards-resumo">
+            <div class="card total">
+                <h3>Total de notícias</h3>
+                <p>{{ total_noticias }}</p>
+            </div>
+
+            {% for item in clusters %}
+            <div class="card cluster-card">
+                <h3>Cluster {{ item.cluster }}</h3>
+                <p>{{ item.quantidade }}</p>
+                <span>{{ item.nome_cluster }}</span>
+            </div>
+            {% endfor %}
+        </section>
+
+        <section class="grafico-section">
+            <div class="grafico-box">
+                <h2>Distribuição por cluster</h2>
+                <div class="canvas-area">
+                    <canvas id="graficoClusters"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="filtros">
+            <div class="secao-topo">
+                <h2>Filtrar notícias</h2>
+                <p>Selecione um cluster ou pesquise por termo.</p>
+            </div>
+
+            <div class="filtros-linha">
+                <input type="text" id="buscaTexto" placeholder="Buscar texto...">
+
+                <select id="filtroCluster">
+                    <option value="todos">Todos os clusters</option>
+                    {% for item in clusters %}
+                    <option value="{{ item.cluster }}">Cluster {{ item.cluster }} - {{ item.nome_cluster }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </section>
+
+        <section class="tabela-section">
+            <div class="tabela-topo">
+                <div>
+                    <h2>Notícias agrupadas</h2>
+                    <p id="contadorNoticias">Mostrando notícias</p>
+                </div>
+            </div>
+
+            <div class="tabela-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cluster</th>
+                            <th>Nome do cluster</th>
+                            <th>Texto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabela">
+                        {% for item in noticias %}
+                        <tr data-cluster="{{ item.cluster }}" data-texto="{{ item.texto|lower }}">
+                            <td>
+                                <span class="cluster-badge">Cluster {{ item.cluster }}</span>
+                            </td>
+                            <td>{{ item.nome_cluster }}</td>
+                            <td>{{ item.texto }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="paginacao">
+                <button id="btnAnterior">Anterior</button>
+                <span id="infoPagina">Página 1</span>
+                <button id="btnProxima">Próxima</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const labelsClusters = [
+            {% for item in clusters %}
+                "Cluster {{ item.cluster }}",
+            {% endfor %}
+        ];
+
+        const valoresClusters = [
+            {% for item in clusters %}
+                {{ item.quantidade }},
+            {% endfor %}
+        ];
+
+        const nomesClusters = [
+            {% for item in clusters %}
+                "{{ item.nome_cluster }}",
+            {% endfor %}
+        ];
+
+        const ctx = document.getElementById("graficoClusters");
+
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labelsClusters,
+                datasets: [{
+                    label: "Quantidade de notícias",
+                    data: valoresClusters,
+                    backgroundColor: ["#3483fa", "#00a650", "#f23d4f", "#ffe600"],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                return nomesClusters[context.dataIndex];
+                            }
+                        }
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        const linhasOriginais = Array.from(document.querySelectorAll("#corpoTabela tr"));
+        const buscaInput = document.getElementById("buscaTexto");
+        const filtroCluster = document.getElementById("filtroCluster");
+        const contadorNoticias = document.getElementById("contadorNoticias");
+
+        const btnAnterior = document.getElementById("btnAnterior");
+        const btnProxima = document.getElementById("btnProxima");
+        const infoPagina = document.getElementById("infoPagina");
+
+        let paginaAtual = 1;
+        const itensPorPagina = 8;
+        let linhasFiltradas = [...linhasOriginais];
+
+        function aplicarFiltros() {
+            const textoBusca = buscaInput.value.toLowerCase().trim();
+            const clusterSelecionado = filtroCluster.value;
+
+            linhasFiltradas = linhasOriginais.filter((linha) => {
+                const texto = linha.getAttribute("data-texto");
+                const cluster = linha.getAttribute("data-cluster");
+
+                const correspondeTexto = texto.includes(textoBusca);
+                const correspondeCluster = clusterSelecionado === "todos" || cluster === clusterSelecionado;
+
+                return correspondeTexto && correspondeCluster;
+            });
+
+            paginaAtual = 1;
+            renderizarTabela();
+        }
+
+        function renderizarTabela() {
+            linhasOriginais.forEach(linha => linha.style.display = "none");
+
+            const totalPaginas = Math.max(1, Math.ceil(linhasFiltradas.length / itensPorPagina));
+            if (paginaAtual > totalPaginas) paginaAtual = totalPaginas;
+
+            const inicio = (paginaAtual - 1) * itensPorPagina;
+            const fim = inicio + itensPorPagina;
+
+            const linhasPagina = linhasFiltradas.slice(inicio, fim);
+
+            linhasPagina.forEach(linha => {
+                linha.style.display = "";
+            });
+
+            contadorNoticias.textContent = `Mostrando ${linhasPagina.length} de ${linhasFiltradas.length} notícias filtradas`;
+            infoPagina.textContent = `Página ${paginaAtual} de ${totalPaginas}`;
+
+            btnAnterior.disabled = paginaAtual === 1;
+            btnProxima.disabled = paginaAtual === totalPaginas;
+        }
+
+        buscaInput.addEventListener("input", aplicarFiltros);
+        filtroCluster.addEventListener("change", aplicarFiltros);
+
+        btnAnterior.addEventListener("click", () => {
+            if (paginaAtual > 1) {
+                paginaAtual--;
+                renderizarTabela();
+            }
+        });
+
+        btnProxima.addEventListener("click", () => {
+            const totalPaginas = Math.ceil(linhasFiltradas.length / itensPorPagina);
+            if (paginaAtual < totalPaginas) {
+                paginaAtual++;
+                renderizarTabela();
+            }
+        });
+
+        renderizarTabela();
+    </script>
+</body>
+</html>
